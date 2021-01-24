@@ -1,25 +1,23 @@
 // Display the current day at the top of the calendar
 var todaysDate = moment().format("dddd, MMMM Do YYYY");
 $("#currentDay").text(todaysDate);
-bkGr();
 
+// get time in 24 format for if statements
+var timeCompare = moment().format("H");
+console.log("current time in 24 format: " + timeCompare)
+bkGr();
+existingNotes();
 // Each time block is color - coded to indicate whether it is in the past, present, or future
 function bkGr() {
     $("textarea").each(function () {
         var accordingHourBlock = parseInt($(this).attr("id"));
         console.log(accordingHourBlock);
-        // get time in 24 format for if statements
-        var timeCompare = moment().format("H");
-        console.log("current time in 24 format: " + timeCompare)
-
         if (accordingHourBlock < timeCompare) {
-            // accordingHourBlock === timeCompare
-            $(this).addClass("past") // present
+            $(this).addClass("past")
         } else if (accordingHourBlock > timeCompare) {
             $(this).addClass("future")
-        } else // if (accordingHourBlock < timeCompare) {
-            $(this).addClass("present") // past
-        //}
+        } else
+            $(this).addClass("present")
     });
 };
 
@@ -49,5 +47,3 @@ function existingNotes() {
         }
     })
 };
-existingNotes();
-
