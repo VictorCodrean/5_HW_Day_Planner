@@ -4,7 +4,7 @@
 # Table of Contents
 
 - [Description](#Description)
-- [Instructions to play](#Instructions)
+- [Instructions to use](#Instructions)
 - [Illustration of generated password](#Illustration)
 - [Framework HTML/CSS/JS](#Framework)
 - [Quick GoThrough](#Gothrough)
