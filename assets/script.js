@@ -1,44 +1,53 @@
-
 // Display the current day at the top of the calendar
 var todaysDate = moment().format("dddd, MMMM Do YYYY");
 $("#currentDay").text(todaysDate);
+bkGr();
 
-var timeCompare = moment().format("H");
-
-// WHEN I scroll down
-// THEN I am presented with time blocks for standard business hours
-
-
-// WHEN I view the time blocks for that day
-// THEN each time block is color - coded to indicate whether it is in the past, present, or future
+// Each time block is color - coded to indicate whether it is in the past, present, or future
 function bkGr() {
     $("textarea").each(function () {
-        var accordingHour = parseInt($(this).attr("id"));
-        console.log(accordingHour);
+        var accordingHourBlock = parseInt($(this).attr("id"));
+        console.log(accordingHourBlock);
+        // get time in 24 format for if statements
+        var timeCompare = moment().format("H");
+        console.log("current time in 24 format: " + timeCompare)
 
-        if (accordingHour === timeCompare) {
-            $(this).addClass("present")
-        } else if (accordingHour > timeCompare) {
+        if (accordingHourBlock < timeCompare) {
+            // accordingHourBlock === timeCompare
+            $(this).addClass("past") // present
+        } else if (accordingHourBlock > timeCompare) {
             $(this).addClass("future")
-        } else // if (accordingHour < timeCompare) {
-            $(this).addClass("past")
+        } else // if (accordingHourBlock < timeCompare) {
+            $(this).addClass("present") // past
         //}
     });
 };
-bkGr();
-console.log("break")
-console.log(timeCompare)
-console.log()
 
+// If click saveBtn then the text from $(textarea).val() is saved in local storage
+$(".saveBtn").on("click", function () {
+    console.log("hello world")
+    var getParent = $(this).parent()
+    var textareaId = getParent.children("textarea").attr("id");
+    var textareaValue = getParent.children("textarea").val();
+    console.log(getParent)
+    console.log(textareaId)
+    console.log(textareaValue)
 
+    // SYNTAX:            KeyName     Stored value
+    localStorage.setItem(textareaId, textareaValue);
+    console.log("Get local Storage: " + localStorage.getItem(textareaId))
+})
 
-// WHEN I click into a time block
-// THEN I can er an event
+//After refreshing the page, the saved events persist
+function existingNotes() {
+    $("textarea").each(function () {
+        var grabId = $(this).attr("id");
+        // console.log(grabValue)
+        var content = localStorage.getItem(grabId);
+        if (content !== null) {
+            $(this).val(content)
+        }
+    })
+};
+existingNotes();
 
-
-// WHEN I click the save button for that time block
-// THEN the text for that event is saved in local storage
-
-
-// WHEN I refresh the page
-// THEN the saved events persist
